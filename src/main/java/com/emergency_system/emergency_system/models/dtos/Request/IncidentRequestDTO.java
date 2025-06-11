@@ -16,6 +16,7 @@ public class IncidentRequestDTO {
     @NotBlank(message = "Type is a required field, Please enter a type to continue.")
     @Size(min = 3, max = 50, message = "Type must be between 3 and 50 characters")
     private String type;
+    
     public String getTitle() {
         return title;
     }
