@@ -7,9 +7,7 @@ public class ResourceResponseDTO {
     private String currentLatitude;
     private String currentLongitude;
 
-    public ResourceResponseDTO(String name, String description, String type, String currentLatitude, String currentLongitude) {
 
-    }
 
     public String getName() {
         return name;

@@ -1,8 +1,18 @@
 package com.emergency_system.emergency_system.models.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+import java.time.LocalDate;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+
+@Entity
+@Table(name = "incident_entity")
 public class IncidentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,14 +25,24 @@ public class IncidentEntity {
     private String location;
     @Column(name = "type")
     private String type;
+    @Column(name = "status")
+    private String status;
     @Column(name = "created_at")
     private LocalDate createdAt;
     @Column(name = "updated_at")
-    private String updatedAt;
+    private LocalDate updatedAt;
 
 
     public Long getId() {
         return id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
     public void setId(Long id) {
         this.id = id;
@@ -51,17 +71,27 @@ public class IncidentEntity {
     public void setType(String type) {
         this.type = type;
     }
-    public String getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
-    public String getUpdatedAt() {
+    public LocalDate getUpdatedAt() {
         return updatedAt;
     }
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
     }  
-     
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDate.now();
+        this.updatedAt = LocalDate.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDate.now();
+    }
 }

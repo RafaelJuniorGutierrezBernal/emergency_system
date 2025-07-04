@@ -3,7 +3,7 @@ package com.emergency_system.emergency_system.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.emergency_system.emergency_system.repository.IncidentRepository;
-import com.emergency_system.emergency_system.entity.IncidentEntity;
+import com.emergency_system.emergency_system.models.entities.IncidentEntity;
 import com.emergency_system.emergency_system.service.IncidentService;
 import java.util.List;
 import java.util.Optional;
@@ -16,58 +16,51 @@ public class IncidentServiceImpl implements IncidentService {
     @Autowired
     private IncidentRepository incidentRepository;
     
-    /**
-     * Saves an incident in the database.
-     *
-     * @param incident the incident to be saved; must not be null and must have a valid description
-     * @return the saved incident
-     * @throws IllegalArgumentException if the incident is null or its description is empty
-     */
     @Override
     public IncidentEntity save(IncidentEntity incident) {
-        Assert.notNull(incident, "El incidente no puede ser nulo");
-        Assert.hasText(incident.getDescription(), "La descripción del incidente no puede estar vacía");
-        Assert.notNull(incident.getLocation(), "La ubicación del incidente no puede ser nula");
-        Assert.notNull(incident.getStatus(), "El estado del incidente no puede ser nulo");
+        if (incident == null) {
+            throw new IllegalArgumentException("Incident cannot be null");
+        }
+        if (incident.getDescription() == null || incident.getDescription().isEmpty()) {
+            throw new IllegalArgumentException("Incident description cannot be empty");
+        }
+        if (incident.getLocation() == null) {
+            throw new IllegalArgumentException("Incident location cannot be null");
+        }
+        if (incident.getStatus() == null) {
+            throw new EntityNotFoundException("Incident status must be valid");
+        }
         return incidentRepository.save(incident);
     }
-    
-    /**
-     * Retrieves an incident by its ID.
-     *
-     * @param id the ID of the incident to be retrieved
-     * @return an Optional containing the incident if found; empty otherwise
-     * @throws IllegalArgumentException if the ID is null or not greater than 0
-     */
+
     @Override
     public Optional<IncidentEntity> findById(Long id) {
-        Assert.notNull(id, "El ID no puede ser nulo");
-        Assert.isTrue(id > 0, "El ID debe ser mayor que 0");
+        if (id == null) {
+            throw new IllegalArgumentException("ID cannot be null");
+        }
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID must be greater than 0");
+        }
         return incidentRepository.findById(id);
     }
-    
-    /**
-     * Retrieves all incidents from the database.
-     *
-     * @return a list of all incidents stored in the database; never null
-     * @throws IllegalStateException if no incidents are found
-     */
+
     @Override
     public List<IncidentEntity> findAll() {
         List<IncidentEntity> incidents = incidentRepository.findAll();
-        Assert.notEmpty(incidents, "No se encontraron incidentes");
+        if (incidents.isEmpty()) {
+            throw new IllegalStateException("No incidents found");
+        }
         return incidents;
     }
-    
-    /**
-     * Deletes an incident by its ID.
-     *
-     * @param id the ID of the incident to be deleted; must not be null and must be greater than 0
-     * @throws IllegalArgumentException if the ID is null or not greater than 0
-     * @throws EntityNotFoundException if no incident with the given ID is found
-     */
+
     @Override
     public void deleteById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID cannot be null");
+        }
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID must be greater than 0");
+        }
         Assert.notNull(id, "El ID no puede ser nulo");
         Assert.isTrue(id > 0, "El ID debe ser mayor que 0");
         if (!incidentRepository.existsById(id)) {
@@ -103,5 +96,58 @@ public class IncidentServiceImpl implements IncidentService {
         long count = incidentRepository.count();
         Assert.isTrue(count >= 0, "El conteo no puede ser negativo");
         return count;
+    }
+
+    @Override
+    public IncidentEntity update(Long id, IncidentEntity incident) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID cannot be null");
+        }
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID must be greater than 0");
+        }
+        if (incident == null) {
+            throw new IllegalArgumentException("Incident cannot be null");
+        }
+        if (incident.getDescription() == null || incident.getDescription().isEmpty()) {
+            throw new IllegalArgumentException("Incident description cannot be empty");
+        }
+        if (incident.getLocation() == null) {
+            throw new IllegalArgumentException("Incident location cannot be null");
+        }
+        if (incident.getStatus() == null) {
+            throw new EntityNotFoundException("Incident status must be valid");
+        }
+        return incidentRepository.save(incident);
+    }
+
+    @Override
+    public List<IncidentEntity> search(String type, String location) {
+        if (type != null && location != null) {
+            return incidentRepository.findByTypeAndLocation(type, location);
+        } else if (type != null) {
+            return incidentRepository.findByType(type);
+        } else if (location != null) {
+            return incidentRepository.findByLocation(location);
+        } else {
+            return incidentRepository.findAll();
+        }
+    }
+
+    @Override
+    public IncidentEntity updateStatus(Long id, String status) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID cannot be null");
+        }
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID must be greater than 0");
+        }
+        if (status == null || status.isEmpty()) {
+            throw new IllegalArgumentException("Status cannot be null or empty");
+        }
+        IncidentEntity incident = incidentRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("No se encontró el incidente con ID: " + id));
+        incident.setStatus(status);
+        return incidentRepository.save(incident);
     }
 }

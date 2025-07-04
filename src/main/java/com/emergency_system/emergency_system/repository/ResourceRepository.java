@@ -2,7 +2,9 @@ package com.emergency_system.emergency_system.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.emergency_system.emergency_system.entity.ResourceEntity;
+
+import com.emergency_system.emergency_system.models.entities.ResourceEntity;
+
 
 @Repository
 public interface ResourceRepository extends JpaRepository<ResourceEntity, Long> {

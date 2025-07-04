@@ -1,10 +1,12 @@
 package com.emergency_system.emergency_system.mapper;
 
-import com.emergency_system.emergency_system.entity.IncidentEntity;
-import com.emergency_system.emergency_system.dto.request.IncidentRequestDTO;
-import com.emergency_system.emergency_system.dto.response.IncidentResponseDTO;
+import org.springframework.stereotype.Component;
+import com.emergency_system.emergency_system.models.dtos.Request.IncidentRequestDTO;
+import com.emergency_system.emergency_system.models.entities.IncidentEntity;
+import com.emergency_system.emergency_system.models.dtos.Response.IncidentResponseDTO;
 
-public interface IncidentMapper {
+@Component
+public class IncidentMapper {
     
     /**
      * Converts an IncidentRequestDTO to IncidentEntity
@@ -23,6 +25,7 @@ public interface IncidentMapper {
         entity.setDescription(requestDTO.getDescription());
         entity.setLocation(requestDTO.getLocation());
         entity.setType(requestDTO.getType());
+        entity.setStatus("NUEVO");
         return entity;
     }
     
@@ -37,14 +40,13 @@ public interface IncidentMapper {
         if (entity == null) {
             throw new IllegalArgumentException("La entidad no puede ser nula");
         }
-        
-        IncidentResponseDTO response = new IncidentResponseDTO();
-        response.setTitle(entity.getTitle());
-        response.setDescription(entity.getDescription());
-        response.setLocation(entity.getLocation());
-        response.setType(entity.getType());
-        response.setCreatedAt(entity.getCreatedAt());
-        response.setUpdatedAt(entity.getUpdatedAt());
-        return response;
+        return new IncidentResponseDTO(
+            entity.getTitle(),
+            entity.getDescription(),
+            entity.getLocation(),
+            entity.getType(),
+            entity.getCreatedAt(),
+            entity.getUpdatedAt()
+        );
     }
 }

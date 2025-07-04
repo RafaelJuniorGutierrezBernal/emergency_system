@@ -1,8 +1,7 @@
 package com.emergency_system.emergency_system.models.dtos.Response;
 
 public class ReportResponseDTO {
-    public class ReportResponseDTO {
-
+    
         private String reportId;
         private String reportDescription;
     
@@ -24,4 +23,4 @@ public class ReportResponseDTO {
     
         
     }
-}
+

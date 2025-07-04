@@ -1,10 +1,12 @@
 package com.emergency_system.emergency_system.mapper;
 
-import com.emergency_system.emergency_system.entity.ResourceEntity;
-import com.emergency_system.emergency_system.dto.request.ResourceRequestDTO;
-import com.emergency_system.emergency_system.dto.response.ResourceResponseDTO;
+import org.springframework.stereotype.Component;
+import com.emergency_system.emergency_system.models.dtos.Request.ResourceRequestDTO;
+import com.emergency_system.emergency_system.models.dtos.Response.ResourceResponseDTO;
+import com.emergency_system.emergency_system.models.entities.ResourceEntity;
 
-public interface ResourceMapper {
+@Component
+public class ResourceMapper {
     
     /**
      * Converts a ResourceRequestDTO to ResourceEntity

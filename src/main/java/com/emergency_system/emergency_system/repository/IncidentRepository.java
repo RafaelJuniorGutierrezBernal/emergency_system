@@ -1,8 +1,10 @@
 package com.emergency_system.emergency_system.repository;
 
+import com.emergency_system.emergency_system.models.entities.IncidentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.emergency_system.emergency_system.entity.IncidentEntity;
+
+import java.util.List;
 
 @Repository
 public interface IncidentRepository extends JpaRepository<IncidentEntity, Long> {
@@ -13,5 +15,9 @@ public interface IncidentRepository extends JpaRepository<IncidentEntity, Long> 
     // deleteById() - para eliminar por ID
     // delete() - para eliminar una entidad
     // count() - para contar registros
+
+    List<IncidentEntity> findByType(String type);
+    List<IncidentEntity> findByLocation(String location);
+    List<IncidentEntity> findByTypeAndLocation(String type, String location);
 }
 

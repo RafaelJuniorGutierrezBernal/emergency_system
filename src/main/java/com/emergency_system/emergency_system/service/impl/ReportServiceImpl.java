@@ -3,7 +3,8 @@ package com.emergency_system.emergency_system.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.emergency_system.emergency_system.repository.ReportRepository;
-import com.emergency_system.emergency_system.entity.ReportEntity;
+import com.emergency_system.emergency_system.models.entities.ReportEntity;
+import com.emergency_system.emergency_system.models.entities.ResourceEntity;
 import com.emergency_system.emergency_system.service.ReportService;
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +17,6 @@ public class ReportServiceImpl implements ReportService {
     @Autowired
     private ReportRepository reportRepository;
     
-
-
     /**
      * Saves a report in the database.
      *
@@ -27,11 +26,9 @@ public class ReportServiceImpl implements ReportService {
      */
 
     @Override
-    public ReportEntity save(ReportEntity report) {
+    public com.emergency_system.emergency_system.models.entities.ReportEntity save(com.emergency_system.emergency_system.models.entities.ReportEntity report) {
         Assert.notNull(report, "El reporte no puede ser nulo");
         Assert.hasText(report.getDescription(), "La descripción del reporte no puede estar vacía");
-        Assert.notNull(report.getIncident(), "El incidente asociado no puede ser nulo");
-        Assert.notNull(report.getUser(), "El usuario asociado no puede ser nulo");
         return reportRepository.save(report);
     }
 
@@ -116,4 +113,5 @@ public class ReportServiceImpl implements ReportService {
         Assert.isTrue(count >= 0, "El conteo no puede ser negativo");
         return count;
     }
+
 }

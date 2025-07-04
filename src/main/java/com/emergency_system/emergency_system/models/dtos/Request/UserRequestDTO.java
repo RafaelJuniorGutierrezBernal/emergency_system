@@ -31,6 +31,13 @@ public class UserRequestDTO {
     @Size(min = 1, message = "Last name must be at least 1 characters")
     @JsonProperty(value="last_name")
     private String lastName;
+    @NotBlank
+    @JsonProperty(value="role")
+    private String role;
+
+
+
+
     public String getUsername() {
         return username;
     }
@@ -60,6 +67,12 @@ public class UserRequestDTO {
     }
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
     }
 
 

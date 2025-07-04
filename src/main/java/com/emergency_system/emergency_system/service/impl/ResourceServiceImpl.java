@@ -3,7 +3,6 @@ package com.emergency_system.emergency_system.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.emergency_system.emergency_system.repository.ResourceRepository;
-import com.emergency_system.emergency_system.entity.ResourceEntity;
 import com.emergency_system.emergency_system.service.ResourceService;
 import java.util.List;
 import java.util.Optional;
@@ -24,11 +23,10 @@ public class ResourceServiceImpl implements ResourceService {
      * @throws IllegalArgumentException if the resource is null or its name is empty
      */
     @Override
-    public ResourceEntity save(ResourceEntity resource) {
+    public com.emergency_system.emergency_system.models.entities.ResourceEntity save(com.emergency_system.emergency_system.models.entities.ResourceEntity resource) {
         Assert.notNull(resource, "El recurso no puede ser nulo");
         Assert.hasText(resource.getName(), "El nombre del recurso no puede estar vacío");
         Assert.notNull(resource.getType(), "El tipo de recurso no puede ser nulo");
-        Assert.isTrue(resource.getQuantity() >= 0, "La cantidad del recurso no puede ser negativa");
         return resourceRepository.save(resource);
     }
     
@@ -40,7 +38,7 @@ public class ResourceServiceImpl implements ResourceService {
      * @throws IllegalArgumentException if the ID is null or not greater than 0
      */
     @Override
-    public Optional<ResourceEntity> findById(Long id) {
+    public Optional<com.emergency_system.emergency_system.models.entities.ResourceEntity> findById(Long id) {
         Assert.notNull(id, "El ID no puede ser nulo");
         Assert.isTrue(id > 0, "El ID debe ser mayor que 0");
         return resourceRepository.findById(id);
@@ -53,8 +51,8 @@ public class ResourceServiceImpl implements ResourceService {
      * @throws IllegalStateException if no resources are found
      */
     @Override
-    public List<ResourceEntity> findAll() {
-        List<ResourceEntity> resources = resourceRepository.findAll();
+    public List<com.emergency_system.emergency_system.models.entities.ResourceEntity> findAll() {
+        List<com.emergency_system.emergency_system.models.entities.ResourceEntity> resources = resourceRepository.findAll();
         Assert.notEmpty(resources, "No se encontraron recursos");
         return resources;
     }
@@ -84,7 +82,7 @@ public class ResourceServiceImpl implements ResourceService {
      * @throws EntityNotFoundException if no resource with the given ID is found
      */
     @Override
-    public void delete(ResourceEntity resource) {
+    public void delete(com.emergency_system.emergency_system.models.entities.ResourceEntity resource) {
         Assert.notNull(resource, "El recurso no puede ser nulo");
         Assert.notNull(resource.getId(), "El ID del recurso no puede ser nulo");
         if (!resourceRepository.existsById(resource.getId())) {

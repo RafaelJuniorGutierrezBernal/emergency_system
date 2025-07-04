@@ -1,10 +1,12 @@
 package com.emergency_system.emergency_system.mapper;
 
-import com.emergency_system.emergency_system.entity.ReportEntity;
-import com.emergency_system.emergency_system.dto.request.ReportRequestDTO;
-import com.emergency_system.emergency_system.dto.response.ReportResponseDTO;
+import org.springframework.stereotype.Component;
+import com.emergency_system.emergency_system.models.dtos.Request.ReportRequestDTO;
+import com.emergency_system.emergency_system.models.dtos.Response.ReportResponseDTO;
+import com.emergency_system.emergency_system.models.entities.ReportEntity;
 
-public interface ReportMapper {
+@Component
+public class ReportMapper {
     
     /**
      * Converts a ReportRequestDTO to ReportEntity
@@ -36,9 +38,8 @@ public interface ReportMapper {
         }
         
         ReportResponseDTO response = new ReportResponseDTO();
-        response.setDescription(entity.getDescription());
-        response.setCreatedAt(entity.getCreatedAt());
-        response.setUpdatedAt(entity.getUpdatedAt());
+        response.setReportId(entity.getId() != null ? entity.getId().toString() : null);
+        response.setReportDescription(entity.getDescription());
         return response;
     }
 }

@@ -1,6 +1,8 @@
 package com.emergency_system.emergency_system.models.dtos.Response;
 
-public class IncidentRespondeDTO {
+import java.time.LocalDate;
+
+public class IncidentResponseDTO {
 
     private String title;
     private String description;
@@ -9,7 +11,7 @@ public class IncidentRespondeDTO {
     private LocalDate createdAt;
     private LocalDate updatedAt;
 
-    public IncidentRespondeDTO(String title, String description, String location, String type, String createdAt, String updatedAt) {
+    public IncidentResponseDTO(String title, String description, String location, String type, LocalDate createdAt, LocalDate updatedAt) {
         this.title = title;
         this.description = description;
         this.location = location;
@@ -54,7 +56,7 @@ public class IncidentRespondeDTO {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -62,7 +64,7 @@ public class IncidentRespondeDTO {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
     }
     

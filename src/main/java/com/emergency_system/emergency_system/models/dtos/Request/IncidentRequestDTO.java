@@ -1,5 +1,7 @@
 package com.emergency_system.emergency_system.models.dtos.Request;
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -40,6 +42,13 @@ public class IncidentRequestDTO {
     }
     public void setType(String type) {
         this.type = type;
+    }
+    
+    public void setCreatedAt(LocalDate createdAt) {
+        
+    }
+    public void setUpdatedAt(LocalDate updatedAt) {
+       
     }
 
     

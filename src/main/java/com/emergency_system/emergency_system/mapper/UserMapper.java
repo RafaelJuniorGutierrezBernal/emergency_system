@@ -1,10 +1,12 @@
 package com.emergency_system.emergency_system.mapper;
 
-import com.emergency_system.emergency_system.entity.UserEntity;
-import com.emergency_system.emergency_system.dto.request.UserRequestDTO;
-import com.emergency_system.emergency_system.dto.response.UserResponseDTO;
+import org.springframework.stereotype.Component;
+import com.emergency_system.emergency_system.models.dtos.Request.UserRequestDTO;
+import com.emergency_system.emergency_system.models.dtos.Response.UserRespondeDTO;
+import com.emergency_system.emergency_system.models.entities.UserEntity;
 
-public interface UserMapper {
+@Component
+public class UserMapper {
     
     /**
      * Converts a UserRequestDTO to UserEntity
@@ -24,6 +26,7 @@ public interface UserMapper {
         entity.setPhoneNumber(requestDTO.getPhoneNumber());
         entity.setFirstName(requestDTO.getFirstName());
         entity.setLastName(requestDTO.getLastName());
+        entity.setRole(requestDTO.getRole());
         return entity;
     }
     
@@ -34,18 +37,19 @@ public interface UserMapper {
      * @return the converted DTO
      * @throws IllegalArgumentException if the entity is null
      */
-    public UserResponseDTO EntitytoResponseDTO(UserEntity entity) {
+    public UserRespondeDTO EntitytoResponseDTO(UserEntity entity) {
         if (entity == null) {
             throw new IllegalArgumentException("La entidad no puede ser nula");
         }
         
-        UserResponseDTO response = new UserResponseDTO();
+        UserRespondeDTO response = new UserRespondeDTO();
         response.setUsername(entity.getUsername());
         response.setEmail(entity.getEmail());
         response.setFirstName(entity.getFirstName());
         response.setLastName(entity.getLastName());
         response.setCreatedAt(entity.getCreatedAt());
         response.setUpdatedAt(entity.getUpdatedAt());
+        response.setRole(entity.getRole());
         return response;
     }
 }
