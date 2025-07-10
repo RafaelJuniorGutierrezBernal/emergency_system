@@ -1,5 +1,7 @@
 package com.emergency_system.emergency_system.models.dtos.Request;
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -16,6 +18,7 @@ public class IncidentRequestDTO {
     @NotBlank(message = "Type is a required field, Please enter a type to continue.")
     @Size(min = 3, max = 50, message = "Type must be between 3 and 50 characters")
     private String type;
+    
     public String getTitle() {
         return title;
     }
@@ -39,6 +42,13 @@ public class IncidentRequestDTO {
     }
     public void setType(String type) {
         this.type = type;
+    }
+    
+    public void setCreatedAt(LocalDate createdAt) {
+        
+    }
+    public void setUpdatedAt(LocalDate updatedAt) {
+       
     }
 
     

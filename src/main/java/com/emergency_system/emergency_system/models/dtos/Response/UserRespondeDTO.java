@@ -29,6 +29,11 @@ public class UserRespondeDTO {
     /** Fecha de última actualización del usuario */
     private LocalDate updatedAt;
 
+    /** Rol del usuario */
+    private String role;
+
+    
+
     public String getUsername() {
         return username;
     }
@@ -64,6 +69,12 @@ public class UserRespondeDTO {
     }
     public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
+    }
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
     }
 
 }
